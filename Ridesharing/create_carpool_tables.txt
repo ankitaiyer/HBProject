@@ -1,0 +1,7 @@
+# Create Tables in carpool.db file
+ NOT NULL AUTO_INCREMENT
+
+sqlite carpool.db
+
+CREATE TABLE Addresses (id INTEGER PRIMARY KEY AUTOINCREMENT, street varchar(65), city varchar(65), state varchar(15), zipcode INT, mobile varchar(15), home varchar(15),  work varchar(15), lng varchar(15), lat varchar(15));
+

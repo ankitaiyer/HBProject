@@ -1,0 +1,45 @@
+84,Madrid Place,Fremont,CA,94539
+6903,Sienna Terrace,Fremont,CA,94555
+2651,Briarfield Ave,Redwood City,CA,94061
+297,Goldenrain Ave,Fremont,CA,94539
+462,Schafer Rd,Hayward,CA,94544
+320,Edgewater Dr,Milpitas,CA,95035
+1065,Mckay Dr,San Jose,CA,95131
+700,S Abel St,Milpitas,CA,95035
+992,Maryann Dr,Santa Clara,CA,95050
+292,Madrone Ave,Santa Clara,CA,95051
+292,Madrone Ave,Santa Clara,CA,95051
+1167,Ayala Dr,Sunnyvale,CA,94086
+955,Bryant Way,Sunnyvale,CA,94087
+10555,S Foothill Blvd,Cupertino,CA,95014
+835,September Ct,Cupertino,CA,95014
+183,Del Medio AveAPT 212,Mountain View,CA,94040
+500,W Middlefield RdAPT 143,Mountain View,CA,94043
+510,Vincent Dr,Mountain View,CA,94041
+154,Hemlock Ct,Palo Alto,CA,94306
+1443,Hamilton Ave,Palo Alto,CA,94301
+272,Pasa Robles Ave,Los Altos,CA,94022
+2104,Christoff Loop,Austin,TX,78748
+73,Rockford Ave,Daly City,CA,94015
+365,Oriente St,Daly City,CA,94014
+1347,Isabelle Cir,South San Francisco,CA,94080
+32,Pointe View Pl,South San Francisco,CA,94080
+293,Cumberland St,San Francisco,CA,94114
+345,Spear Street,San Francisco,CA,94105
+3750,18th St,San Francisco,CA,94114
+683,Sutter St,San Francisco,CA,94108
+1354A,Stevenson St,San Francisco,CA,94103
+1229,Evelyn Ave,Berkeley,CA,94706
+2912,Harper St,Berkeley,CA,94703
+514,Masonic Ave,Albany,CA,94706
+86,Emery Bay Dr,Emeryville,CA,94608
+6240,Highland Ave,Richmond,CA,94805
+209,Siskiyou Ct,Walnut Creek,CA,94598
+2704,Oak Rd,Walnut Creek,CA,94597
+3,Royston Walk,Pleasant Hill,CA,94523
+3651,Treat Blvd,Concord,CA,94518
+41717,Palm Ave,Fremont,CA,94539
+2632,Marine Way,Mountain View,CA,94043
+3100,Hansen Way,Palo Alto,CA,94304
+1600,Amphitheatre Pkwy,Mountain View,CA,94043
+19243,Bay Leaf Ct,Boca Raton,FL,33498
