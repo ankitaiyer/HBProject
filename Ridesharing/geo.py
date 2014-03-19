@@ -15,10 +15,13 @@ def geocode(address,sensor, **geo_args):
     url = GEOCODE_BASE_URL + '?' + urllib.urlencode(geo_args)
     result = simplejson.load(urllib.urlopen(url))
     #prints formatted address 
-    print "FORMATTED ADDRESS IS ", simplejson.dumps([s['formatted_address'] for s in result['results']], indent=2)
+    #print "FORMATTED ADDRESS IS ", simplejson.dumps([s['formatted_address'] for s in result['results']], indent=2)
     #prints lat and lng for the selected address
-    print  "LATTITUDE IS: " , simplejson.dumps([s['geometry']['location']['lat'] for s in result['results']], indent=2)    
-    print  "LONGITUDE IS: " , simplejson.dumps([s['geometry']['location']['lng'] for s in result['results']], indent=2)    
+    #print  "LATTITUDE IS: " , simplejson.dumps([s['geometry']['location']['lat'] for s in result['results']], indent=2)    
+    #print  "LONGITUDE IS: " , simplejson.dumps([s['geometry']['location']['lng'] for s in result['results']], indent=2)
+    lat =  [s['geometry']['location']['lat'] for s in result['results']] 
+    lng =  [s['geometry']['location']['lng'] for s in result['results']]
+    return lat[0], lng[0]
   
 def reverse_geocode(latlng,sensor,location_type,result_type, **geo_args):
     print "LAT AND LNG ARE: ", latlng
@@ -70,7 +73,7 @@ def main():
     while (action != 'Q'):
         print
         if (action == 'A'):
-            getLatLng(raw_input('Enter the address: '))
+            getLatLng(raw_input('Enter the address (format:683,Sutter St,San Francisco,CA,94108): '))
         elif (action == 'B'):
             getAddress(raw_input('Enter the latitude/longutude (format: 123.1234,-123.1234): '))
         # elif (action == 'C'):

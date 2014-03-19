@@ -4,7 +4,7 @@ import csv
 
 def load_addresses(session):
     # use u.user
-    filename = "./DepartDest.txt"
+    filename = "./data/DepartDest.txt"
     with open(filename, 'rb') as f:
         reader = csv.reader(f, delimiter=",", quoting=csv.QUOTE_NONE)
         #print reader
