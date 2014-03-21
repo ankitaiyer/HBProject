@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy import DateTime
 import geo
+import background
 
 ENGINE = create_engine("sqlite:///carpool.db", echo=False)
 session = scoped_session(sessionmaker(bind=ENGINE, autocommit = False, autoflush = False))
@@ -96,8 +97,12 @@ def complete_commute_profile(user_id, startaddrform, destaddrform, starttimeform
         current_user.home = homeform
         current_user.work = workform
         session.add(current_user)
-        
+
     session.commit()
+
+def get_destination_addresses():
+
+
 
 
 def main():

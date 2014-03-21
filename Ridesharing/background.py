@@ -27,8 +27,8 @@ def load_latlng(session):
             adr.lng = lng
     session.commit()
   
-def get_latlng():
-    result = session.query(model.Address).all()
+def get_latlng(query):
+    result = query
     latlng = []
     for adr in result:
         tup_item1 = float(unicode(adr.lat)) if adr.lat else None
@@ -59,13 +59,12 @@ def main(session):
     #Call geo code function to load latlng for addresses where latlng is missing
     load_latlng(session)
 
-    #Get all latlng available in the Address table to calculate ceter using kmeans clustering. Return data as Tuple
-    latlng_list = get_latlng()
+    #Get all latlngs available in the Address table to calculate ceter using kmeans clustering. Return data as Tuple
+    query = session.query(model.Address).all()
+    latlng_list = get_latlng(query)
 
     
-    #sample data
-    # data = numpy.array([[  37.7708158, -122.421831 ],
-    #    [  37.4301485, -122.098137 ], [37.9559086,-122.088220],[37.158562,-122.930034],[37.7901435,-122.290267],[37.31463,-122.147957]])
+    #Format latlngs into numpy array to calculate centroids usig kmeans clusterig technique.
     data = numpy.array(latlng_list)
     centers = get_latlng_clustercenter(data,6)
     # print "Centers are: ", centers

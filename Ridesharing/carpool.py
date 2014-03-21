@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, flash, url_for, session
 import model
 import background
+import json
 #from urlparse import urlparse
 
 app = Flask(__name__)
@@ -74,7 +75,14 @@ def matchfinder():
 
 @app.route("/testmap")
 def testmap():
-    data = background.get_latlng()
+
+    destaddrlist = model.get_destination_addresses()
+    #data = background.get_latlng()
+    #lat = 37.555186
+    #lng = -121.947565
+    lat = 37.555186
+    lng = -121.947565
+    return render_template("match.html", lat=lat, lng=lng)
 
 
 
