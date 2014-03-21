@@ -17,7 +17,7 @@ session = scoped_session(sessionmaker(bind=ENGINE, autocommit = False, autoflush
 
 Base = declarative_base()
 Base.query = session.query_property()
-Base.metadata.create_all(ENGINE)
+
 
 ## Class declarations go here
 class User(Base):
@@ -27,6 +27,9 @@ class User(Base):
     lastname = Column(String(64),nullable=False)
     email = Column(String(64), nullable =False)
     password = Column(String(64), nullable=False)
+    mobile = Column(String(15), nullable=True)
+    home = Column(String(15), nullable=True)
+    work = Column(String(15), nullable=True)
 
 
 class Address(Base):
@@ -36,9 +39,6 @@ class Address(Base):
     city = Column(String(15), nullable=False)
     state = Column(String(15), nullable=False)
     zipcode = Column(String(15), nullable=False)
-    mobile = Column(String(15), nullable=True)
-    home = Column(String(15), nullable=True)
-    work = Column(String(15), nullable=True)
     lng = Column(String(15), nullable=True)
     lat = Column(String(15), nullable=True)
 
@@ -78,13 +78,34 @@ def register_user(firstnameform, lastnameform, emailform, passwordform):
 
 def get_user_by_email(email):
     userid = session.query(User).filter_by(email=email).first()
-    return userid
+    print "user", userid.id
+    return userid.id
 
-def complete_commute_profile(user_id, startaddrform, destaddrform, starttimeform,endtimform):
+#### TODO 
+def complete_commute_profile(user_id, startaddrform, destaddrform, starttimeform,endtimform,mobileform,workform,homeform):
+    adr_list = [startaddrform, destaddrform]
+    for adr in adr_list:
+        address = adr.split()
+        street = address[0] + " " + address[1]
+        temp_addr = Address(street=street, city=address[2], state=address[3], zipcode=address[4])
+        session.add(temp_addr)
 
-    temp_addr = Address()
+    current_user = session.query(User).filter_by(id=user_id).first()
+    if current_user:
+        current_user.mobile = mobileform
+        current_user.home = homeform
+        current_user.work = workform
+        session.add(current_user)
+        
+    session.commit()
 
 
+def main():
+    Base.metadata.create_all(ENGINE)
+
+
+if __name__ == "__main__":
+    main()
 
 
 

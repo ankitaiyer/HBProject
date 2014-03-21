@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request, flash, url_for, session
 import model
+import background
 #from urlparse import urlparse
 
 app = Flask(__name__)
@@ -31,7 +32,8 @@ def process_login():
 
 @app.route("/main_menu")
 def main_menu():
-    return render_template("main_menu.html")
+    user = session['email']
+    return render_template("main_menu.html", user=user)
 
 @app.route("/register")
 def register():
@@ -48,6 +50,7 @@ def registerUser():
 
 @app.route("/clear_session")
 def session_clear():
+    print session['email']
     session.clear()
     return redirect(url_for("index"))
 
@@ -57,8 +60,8 @@ def singup():
 
 @app.route("/signup" , methods=["POST"])
 def matchfinder():
-    if session.get("email"):
-        user_id = get_user_by_email(session.get("email"))
+    if session['email']:
+        user_id = model.get_user_by_email(session['email'])
     startaddrform = request.form.get("depart")
     destaddrform = request.form.get("destination")
     starttimeform = request.form.get("starttime")
@@ -66,8 +69,14 @@ def matchfinder():
     mobileform = request.form.get("mobile")
     workform = request.form.get("work")
     homeform = request.form.get("home")
+    model.complete_commute_profile(user_id, startaddrform,destaddrform,starttimeform,endtimform,mobileform,workform,homeform)
+    return redirect(url_for("testmap"))
 
-    
+@app.route("/testmap")
+def testmap():
+    data = background.get_latlng()
+
+
 
 
 if __name__ == "__main__":
