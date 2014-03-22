@@ -60,9 +60,10 @@ def singup():
     return render_template("commute.html")
 
 @app.route("/signup" , methods=["POST"])
-def matchfinder():
+def commute_profile():
     if session['email']:
-        user_id = model.get_user_by_email(session['email'])
+        email = session['email']
+        user_id = model.get_user_by_email(email)
     startaddrform = request.form.get("depart")
     destaddrform = request.form.get("destination")
     starttimeform = request.form.get("starttime")
@@ -76,7 +77,7 @@ def matchfinder():
 @app.route("/testmap")
 def testmap():
 
-    destaddrlist = model.get_destination_addresses()
+    #destaddrlist = model.get_destination_addresses()
     #data = background.get_latlng()
     #lat = 37.555186
     #lng = -121.947565
