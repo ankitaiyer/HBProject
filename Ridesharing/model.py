@@ -50,8 +50,8 @@ class Commute(Base):
     user_id = Column(Integer, ForeignKey('Users.id'))
     start_addr_id = Column(Integer, ForeignKey('Addresses.id'))
     end_addr_id = Column(Integer, ForeignKey('Addresses.id'))
-    start_time = Column(DateTime, nullable=False)
-    end_time = Column(DateTime, nullable=False)
+    start_time = Column(Integer, nullable=False)
+    end_time = Column(Integer, nullable=False)
 
 
     Users = relationship("User", 
@@ -89,8 +89,8 @@ def register_user(firstnameform, lastnameform, emailform, passwordform):
 
 def get_user_by_email(email):
     userid = session.query(User).filter_by(email=email).first()
-    print email
-    print "user", userid.id
+    #print email
+    #print "user", userid.id
     return userid.id
 
 #### TODO 
@@ -100,27 +100,38 @@ def complete_commute_profile(user_id, startaddrform, destaddrform, starttimeform
         current_user.mobile = mobileform
         current_user.home = homeform
         current_user.work = workform
-        session.add(current_user)
 
 
-    adr_list = [startaddrform, destaddrform]
-    i = 0
-    for adr in adr_list:
-        address = adr.split(',')
-        street = address[0] + " " + address[1]
-        temp_addr = Address(street=street, city=address[2], state=address[3], zipcode=address[4])
-        session.add(temp_addr)
-        ## Update commute table with start address id
-        if i == 0:
-            temp_commute = Commute(user_id=current_user.id, start_addr_id=temp_addr.id, end_addr_id=None, start_time=starttimeform,end_time=endtimform)
-            i = 1
-        ## update commute table with destination address id
-        else:
-            temp_commute.end_addr_id = temp_addr.id
-
+    #adr_list = [startaddrform, destaddrform]
+    #i = 0
+    # for adr in adr_list:
+    #     address = adr.split(',')
+    #     street = address[0] + " " + address[1]
+    start_address = format_address(startaddrform)
+    str_addr = Address(street=start_address[1], city=start_address[0][2], state=start_address[0][3], zipcode=start_address[0][4])
     
-
+    dest_address = format_address(destaddrform)
+    dest_addr = Address(street=dest_address[1], city=dest_address[0][2], state=dest_address[0][3], zipcode=dest_address[0][4])
+    
+    session.add(str_addr)
+    session.add(dest_addr)
     session.commit()
+    #print "TEMP ADDR", temp_addr.id
+    ## Update commute table with start address id
+    # if i == 0:
+    temp_commute = Commute(user_id=current_user.id, start_addr_id=str_addr.id, end_addr_id=dest_addr.id, start_time=starttimeform,end_time=endtimform)
+    #     i = 1
+
+    # ## update commute table with destination address id
+    # else:
+    #     temp_commute.end_addr_id = temp_addr.id
+    session.add(temp_commute)
+    session.commit()
+
+def format_address(adr):
+    address = adr.split(',')
+    street = address[0] + " " + address[1]
+    return address, street
 
 def get_destination_addresses():
     return None

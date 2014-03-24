@@ -78,15 +78,13 @@ def commute_profile():
 def testmap():
 
     #destaddrlist = model.get_destination_addresses()
-    #data = background.get_latlng()
+    #query = session.query(model.Address).filter_by( Address.id > 23 )all()
+    #data = background.get_latlng(query)
     #lat = 37.555186
     #lng = -121.947565
     lat = 37.555186
     lng = -121.947565
     return render_template("match.html", lat=lat, lng=lng)
-
-
-
 
 if __name__ == "__main__":
     app.run(debug = True)
