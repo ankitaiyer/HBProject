@@ -2,6 +2,9 @@ from flask import Flask, render_template, redirect, request, flash, url_for, ses
 import model
 import background
 import json
+import numpy 
+from scipy.cluster.vq import *
+import unicodedata 
 #from urlparse import urlparse
 
 app = Flask(__name__)
@@ -76,15 +79,17 @@ def commute_profile():
 
 @app.route("/testmap")
 def testmap():
+    #show markers for all addresses in the Address table
+    #end_addr_query = model.session.query(model.Address).filter_by(Commute.end_addr_id=Address.id).all()
+    #query = model.session.query(model.Address).all()
+    latlng_list = background.get_latlng(end_addr_query)
 
-    #destaddrlist = model.get_destination_addresses()
-    #query = session.query(model.Address).filter_by( Address.id > 23 )all()
-    #data = background.get_latlng(query)
-    #lat = 37.555186
-    #lng = -121.947565
-    lat = 37.555186
-    lng = -121.947565
-    return render_template("match.html", lat=lat, lng=lng)
+    data = numpy.array(latlng_list)
+    centers = background.get_latlng_clustercenter(data,1)#print latlng_list    
+    lat = centers[0][0] #37.61127878
+    lng = centers[0][1] #-122.1289833
+
+    return render_template("match.html", lat=lat, lng=lng , latlng_list=latlng_list)
 
 if __name__ == "__main__":
     app.run(debug = True)

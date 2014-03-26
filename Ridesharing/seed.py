@@ -9,7 +9,7 @@ def load_addresses(session):
         reader = csv.reader(f, delimiter=",", quoting=csv.QUOTE_NONE)
         #print reader
         for row in reader:
-           # print row
+            #print row
             street = row[0] + " " + row[1]
             temp_address = model.Address(street=street, city=row[2], state=row[3], zipcode=row[4])
             session.add(temp_address)

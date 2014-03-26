@@ -15,8 +15,8 @@ import unicodedata
 
 
 
-def load_latlng(session):
-    result = session.query(model.Address).filter(or_(model.Address.lat == '', model.Address.lng == '', model.Address.lat == None, model.Address.lng == None)).all()
+def load_latlng():
+    result = model.session.query(model.Address).filter(or_(model.Address.lat == '', model.Address.lng == '', model.Address.lat == None, model.Address.lng == None)).all()
     for adr in result:
         addr = []
         if (adr.lat == None or adr.lng == None):
@@ -25,18 +25,17 @@ def load_latlng(session):
             lat,lng = geo.geocode(format_addr,"false")  
             adr.lat = lat
             adr.lng = lng
-    session.commit()
+    model.session.commit()
   
-def get_latlng(query):
-    result = query
+def get_latlng(address_query):
+    result = address_query
+    load_latlng()
     latlng = []
     for adr in result:
         tup_item1 = float(unicode(adr.lat)) if adr.lat else None
         tup_item2 = float(unicode(adr.lng)) if adr.lng else None
-        tup = (tup_item1, tup_item2)
-        #print "TUP:", tup
+        tup = (tup_item1, tup_item2)   
         latlng.append(tup)
-        #print "latlng" , latlng
     return latlng
 
 def get_latlng_clustercenter(data, clusterscount):
@@ -57,10 +56,10 @@ def main(session):
     # return  lat,lng
 
     #Call geo code function to load latlng for addresses where latlng is missing
-    load_latlng(session)
+    load_latlng()
 
     #Get all latlngs available in the Address table to calculate ceter using kmeans clustering. Return data as Tuple
-    query = session.query(model.Address).all()
+    query = model.session.query(model.Address).all()
     latlng_list = get_latlng(query)
 
     
