@@ -8,25 +8,27 @@
       #map-canvas { height: 100% }
     </style>
     <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=&sensor=false">
+      src="https://maps.googleapis.com/maps/api/js?key= {{ API_KEY }} &sensor=false">
     </script>
     <script type="text/javascript">
       function initialize() {
         myLatlng = new google.maps.LatLng({{ lat }}, {{ lng }});
         var mapOptions = {
           center: myLatlng ,
-          zoom:10
+          zoom:12
         };
         var map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions);
 
         var myAddresses = [];
         {% for address in latlng_list %}
-        myAddresses.push(new google.maps.Marker({
-        position: new google.maps.LatLng({{ address[0] }}, {{ address[1] }}),
-        title: "hello world" }));
-         {% endfor %}
-        
+          {{ reverse_geocode(latlng="37.7901435,-122.3902671",location_type="ROOFTOP",result_type="street_address",sensor="true") }}
+          myAddresses.push(new google.maps.Marker({
+                                                   position: new google.maps.LatLng( {{ address[0] }}, {{ address[1] }}),
+                                                   title: " {{ address }} "})
+          );
+        {% endfor %}
+
         for (var i in myAddresses){
         // To add the marker to the map, call setMap();
           myAddresses[i].setMap(map);

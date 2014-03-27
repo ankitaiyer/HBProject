@@ -1,9 +1,11 @@
 import urllib2, urllib, json, re, cookielib, requests
 from gmaps import Geocoding
 import simplejson, urllib
+import os
 
+API_KEY = os.environ.get('API_KEY')
 #Please collect your project api_key
-api_key = ''
+
 GEOCODE_BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json'
 
 def geocode(address,sensor, **geo_args):
@@ -30,13 +32,14 @@ def reverse_geocode(latlng,sensor,location_type,result_type, **geo_args):
         'location_type': location_type,
         'result_type': result_type,
         'sensor': sensor,
-        'key':api_key
+        'key': API_KEY
     })
 
     url = GEOCODE_BASE_URL + '?' + urllib.urlencode(geo_args)
     print url
     result = simplejson.load(urllib2.urlopen(url))
-    print "FORMATTED ADDRESS IS ", simplejson.dumps([s['formatted_address'] for s in result['results']], indent=2)
+    #return "FORMATTED ADDRESS IS ", simplejson.dumps([s['formatted_address'] for s in result['results']], indent=2)
+    return [s['formatted_address'] for s in result['results']]
 
 
 

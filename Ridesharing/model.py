@@ -11,7 +11,7 @@ import background
 import os
 
 #ENGINE = create_engine("sqlite:///carpool.db", echo=False)
-ENGINE = create_engine(os.environ.get("DATABASE_URL", 'sqlite://carpool.db'), echo=False)
+ENGINE = create_engine(os.environ.get("DATABASE_URL", 'sqlite:///carpool.db'), echo=False)
 session = scoped_session(sessionmaker(bind=ENGINE, autocommit = False, autoflush = False))
 #NoResultFound = None
 
@@ -39,11 +39,11 @@ class Address(Base):
     __tablename__ = "addresses"
     id = Column(Integer, primary_key=True)
     street = Column(String(65), nullable=False)
-    city = Column(String(15), nullable=False)
-    state = Column(String(15), nullable=False)
+    city = Column(String(65), nullable=False)
+    state = Column(String(65), nullable=False)
     zipcode = Column(String(15), nullable=False)
-    lng = Column(String(15), nullable=True)
-    lat = Column(String(15), nullable=True)
+    lng = Column(String, nullable=True)
+    lat = Column(String, nullable=True)
 
 
 class Commute(Base):
@@ -52,8 +52,8 @@ class Commute(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
     start_addr_id = Column(Integer, ForeignKey('addresses.id'))
     end_addr_id = Column(Integer, ForeignKey('addresses.id'))
-    start_time = Column(Integer, nullable=False)
-    end_time = Column(Integer, nullable=False)
+    start_time = Column(String, nullable=False)
+    end_time = Column(String, nullable=False)
 
 
     Users = relationship("User", 
@@ -69,7 +69,7 @@ class Commute(Base):
 def connect():
     # Don't run this anymore
     return session
-    
+
     # global ENGINE
     # global Session
 

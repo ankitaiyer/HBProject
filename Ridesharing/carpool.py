@@ -5,10 +5,15 @@ import json
 import numpy 
 from scipy.cluster.vq import *
 import unicodedata 
+import os
+import geo
 #from urlparse import urlparse
+
+API_KEY = os.environ.get('API_KEY')
 
 app = Flask(__name__)
 app.secret_key = "thisispainful"
+app.jinja_env.globals.update(reverse_geocode=geo.reverse_geocode)
 
 @app.route("/")
 def index():
@@ -79,17 +84,17 @@ def commute_profile():
 
 @app.route("/testmap")
 def testmap():
-    #show markers for all addresses in the Address table
-    #end_addr_query = model.session.query(model.Address).filter_by(Commute.end_addr_id=Address.id).all()
-    #query = model.session.query(model.Address).all()
-    latlng_list = background.get_latlng(end_addr_query)
-
+    #show markers for all destination addresses that exist in the Commute table
+    address_query = model.session.query(model.Address).filter_by(id=model.Commute.end_addr_id).all()
+    #address_query = model.session.query(model.Address).all()
+    latlng_list = background.get_latlng(address_query)
+    #print "latlng_list" , latlng_list
     data = numpy.array(latlng_list)
-    centers = background.get_latlng_clustercenter(data,1)#print latlng_list    
+    centers = background.get_latlng_clustercenter(data,1)
     lat = centers[0][0] #37.61127878
     lng = centers[0][1] #-122.1289833
 
-    return render_template("match.html", lat=lat, lng=lng , latlng_list=latlng_list)
+    return render_template("match.html", API_KEY=API_KEY, lat=lat, lng=lng , latlng_list=latlng_list)
 
 if __name__ == "__main__":
     app.run(debug = True)

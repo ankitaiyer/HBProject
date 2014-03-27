@@ -32,15 +32,16 @@ def get_latlng(address_query):
     load_latlng()
     latlng = []
     for adr in result:
-        tup_item1 = float(unicode(adr.lat)) if adr.lat else None
-        tup_item2 = float(unicode(adr.lng)) if adr.lng else None
+        tup_item1 = float(adr.lat) if adr.lat else None
+        tup_item2 = float(adr.lng) if adr.lng else None
         tup = (tup_item1, tup_item2)   
         latlng.append(tup)
     return latlng
 
 def get_latlng_clustercenter(data, clusterscount):
+    #print "data", data
     centers = kmeans2(data, clusterscount)
-    print "centers: ", centers[0]
+    #print "centers: ", centers[0]
     return centers[0]
     #print "DATA IS: ",data
     #centers,idx = kmeans2(data, clusterscount)
