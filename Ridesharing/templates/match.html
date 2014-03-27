@@ -22,10 +22,9 @@
 
         var myAddresses = [];
         {% for address in latlng_list %}
-          {{ reverse_geocode(latlng="37.7901435,-122.3902671",location_type="ROOFTOP",result_type="street_address",sensor="true") }}
-          myAddresses.push(new google.maps.Marker({
+           myAddresses.push(new google.maps.Marker({
                                                    position: new google.maps.LatLng( {{ address[0] }}, {{ address[1] }}),
-                                                   title: " {{ address }} "})
+                                                   title: "{{ reverse_geocode(latlng="%r,%r" % (address[0],address[1]),location_type="ROOFTOP",result_type="street_address",sensor="true") |safe}}"})
           );
         {% endfor %}
 

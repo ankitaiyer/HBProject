@@ -90,7 +90,7 @@ def testmap():
     latlng_list = background.get_latlng(address_query)
     #print "latlng_list" , latlng_list
     data = numpy.array(latlng_list)
-    centers = background.get_latlng_clustercenter(data,1)
+    centers = background.get_latlng_clustercenter(data,3)
     lat = centers[0][0] #37.61127878
     lng = centers[0][1] #-122.1289833
 

@@ -11,7 +11,7 @@ import background
 import os
 
 #ENGINE = create_engine("sqlite:///carpool.db", echo=False)
-ENGINE = create_engine(os.environ.get("DATABASE_URL", 'sqlite:///carpool.db'), echo=False)
+ENGINE = create_engine(os.environ.get("DATABASE_URL", 'postgres://localhost:5432/carpool'), echo=False)
 session = scoped_session(sessionmaker(bind=ENGINE, autocommit = False, autoflush = False))
 #NoResultFound = None
 
